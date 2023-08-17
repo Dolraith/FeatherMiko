@@ -1,0 +1,261 @@
+<ul class="nav nav nav-tabs">
+    <li class="nav-item">
+        <a href="#" v-bind:class="(tab=='types')?'nav-link active':'nav-link'" v-on:click="tab='types'">Types</a>
+    </li>
+    <li class="nav-item">
+        <a href="#" v-bind:class="(tab=='powers')?'nav-link active':'nav-link'" v-on:click="tab='powers'">Powers</a>
+    </li>
+    <li class="nav-item">
+        <a href="#" v-bind:class="(tab=='skills')?'nav-link active':'nav-link'" v-on:click="tab='skills'">Skills</a>
+    </li>
+    <li class="nav-item">
+        <a href="#" v-bind:class="(tab=='power-map')?'nav-link active':'nav-link'" v-on:click="tab='power-map';checkForNulls()">Power-Map</a>
+    </li>
+    <li class="nav-item">
+        <a href="#" v-bind:class="(tab=='skill-map')?'nav-link active':'nav-link'" v-on:click="tab='skill-map';checkForNulls()">Skill-Map</a>
+    </li>
+</ul>
+
+
+<div class="tab-content" id="myTabContent">
+    <!------------------------Types Tab------------------------>
+    <div v-bind:class="(tab=='types')?'tab-pane fade show active':'tab-pane fade'" class="panel" v-if="tab==='types'">
+        <button class="btn btn-primary" v-on:click="addType()">Add Type</button>
+        <div class="card my-1" v-for="(spirit_type, spirit_type_index) in spirit_types">
+            <div class="card-body container">
+                <div class='row form'>
+                    <div class="col-sm">
+                        <label>Type</label>
+                        <input class="form-control" v-model="spirit_type.type"/>
+                    </div>
+                    <div class="col-sm">
+                        <label>Element</label>
+                        <input class="form-control" v-model="spirit_type.element"/>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm">
+                        <label>Body:</label>
+                        <input class='form-control' type="number" v-model.number="spirit_type.body">
+                    </div>
+                    <div class="col-sm">
+                        <label>Agility:</label>
+                        <input class='form-control' type="number" v-model.number="spirit_type.agility">
+                    </div>
+                    <div class="col-sm">
+                        <label>Reaction:</label>
+                        <input class='form-control' type="number" v-model.number="spirit_type.reaction">
+                    </div>
+                    <div class="col-sm">
+                        <label>Strength:</label>
+                        <input class='form-control' type="number" v-model.number="spirit_type.strength">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <label>Willpower:</label>
+                        <input class='form-control' type="number" v-model.number="spirit_type.willpower">
+                    </div>
+                    <div class="col-sm">
+                        <label>Logic:</label>
+                        <input class='form-control' type="number" v-model.number="spirit_type.logic">
+                    </div>
+                    <div class="col-sm">
+                        <label>Intuition:</label>
+                        <input class='form-control' type="number" v-model.number="spirit_type.intuition">
+                    </div>
+                    <div class="col-sm">
+                        <label>Charisma:</label>
+                        <input class='form-control' type="number" v-model.number="spirit_type.charisma">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <label>Magic:</label>
+                        <input class='form-control' type="number" v-model.number="spirit_type.magic">
+                    </div>
+                    <div class="col-sm">
+                        <label>Source:</label>
+                        <input class='form-control' v-model="spirit_type.source">
+                    </div>
+                    <div class="col-sm">
+                        <label>Physical Initiative:</label>
+                        <input class='form-control' v-model="spirit_type.phys_init">
+                    </div>
+                    <div class="col-sm">
+                        <label>Astral Initiative:</label>
+                        <input class='form-control' v-model="spirit_type.astral_init">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <label>Special:</label>
+                        <input class='form-control' type="text" v-model="spirit_type.special">
+                    </div>
+                    <div class="col-sm">
+                        <label>Weakness:</label>
+                        <input class='form-control' type="text" v-model="spirit_type.weakness">
+                    </div>
+                </div>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-primary btn-sm" v-on:click="saveType(spirit_type_index)">Save</button>
+                <button class="btn btn-secondary btn-sm" v-on:click="removeType(spirit_type_index)">X</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!------------------------Powers Tab------------------------>
+    <div v-bind:class="(tab=='powers')?'tab-pane fade show active':'tab-pane fade'"  class="panel" v-if="tab==='powers'">
+        <button class="btn btn-primary" v-on:click="addPower()">Add Power</button>
+        <div class="card my-1" v-for="(spirit_power, spirit_power_index) in spirit_powers">
+            <div class="card-body container">
+                <div class="row">
+                    <div class="col-sm">
+                        <label>Name:</label>
+                        <input class='form-control' v-model="spirit_power.name">
+                    </div>
+                    <div class="col-sm">
+                        <label>Type:</label>
+                        <input class='form-control' v-model="spirit_power.type">
+                    </div>
+                    <div class="col-sm">
+                        <label>Action:</label>
+                        <input class='form-control' v-model="spirit_power.action">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <label>Range:</label>
+                        <input class='form-control' v-model="spirit_power.power_range">
+                    </div>
+                    <div class="col-sm">
+                        <label>Duration:</label>
+                        <input class='form-control' v-model="spirit_power.duration">
+                    </div>
+                    <div class="col-sm">
+                        <label>Source:</label>
+                        <input class='form-control' v-model="spirit_power.source">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <label>Description:</label>
+                        <textarea class="form-control" v-model="spirit_power.descript"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-primary btn-sm" v-on:click="savePower(spirit_power_index)">Save</button>
+                <button class="btn btn-secondary btn-sm" v-on:click="removePower(spirit_power_index)">X</button>
+            </div>
+        </div>
+    </div>
+    <!------------------------Skills Tab------------------------>
+    <div v-bind:class="(tab=='skills')?'tab-pane fade show active':'tab-pane fade'"  class="panel" v-if="tab==='skills'">
+        <button class="btn btn-primary" v-on:click="addSkill()">Add Skill</button>
+        <div class="card my-1" v-for="(spirit_skill, spirit_skill_index) in spirit_skills">
+            <div class="card-body container">
+                <div class="row">
+                    <div class="col-sm">
+                        <label>Name:</label>
+                        <input class='form-control' v-model="spirit_skill.name">
+                    </div>
+                    <div class="col-sm">
+                        <label>Attribute:</label>
+                        <select v-model="spirit_skill.attribute" class="form-control">
+                            <option v-for="attribute in attributes" v-bind:value="attribute">{{attribute}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-primary btn-sm" v-on:click="saveSkill(spirit_skill_index)">Save</button>
+                <button class="btn btn-secondary btn-sm" v-on:click="removeSkill(spirit_skill_index)">X</button>
+            </div>
+        </div>
+    </div>
+    <!------------------------Power-Map Tab------------------------>
+    <div v-bind:class="(tab=='power-map')?'tab-pane fade show active':'tab-pane fade'"  class="panel" v-if="tab==='power-map'">
+        <div class="container">
+            <div class="row">
+                <div class="col-2">
+                    <ul class="nav flex-column border-right">
+                        <button class="btn btn-primary btn-sm" v-bind:disabled="!(powermap.active != null && powermap[powermap.active].changed===true)" v-on:click="map_power_save()">Save</button>
+                        <li class="nav-item" v-for="spirit_type in spirit_types">
+                            <a v-if="powermap.active!=spirit_type._id" href='#' class="nav-link" v-on:click="activatePowermap(spirit_type._id)">{{spirit_type.type}}-{{spirit_type.element}}{{powermap[spirit_type._id].changed==true?"*":""}}</a>
+                            <div v-if="powermap.active==spirit_type._id" class="nav-link bg-secondary" disabled>{{spirit_type.type}}-{{spirit_type.element}}{{powermap[spirit_type._id].changed==true?"*":""}}</div>
+                        </li>
+                        
+                    </ul>
+                    
+                </div>
+                <div class="col-9" v-if="powermap.active!=null">
+                    <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>Power</th>
+                            <th>Not Available</th>
+                            <th>Optional</th>
+                            <th>Required</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="power in spirit_powers">
+                                <th>{{power.name}}</th>
+                                <td>
+                                    <label class="form-check-custom success">
+                                        <input type="radio" v-model="powermap[powermap.active][power._id].required" v-on:change="map_power(powermap.active, power._id)" value="none">
+                                    </label>
+                                </td>
+                                <td>
+                                    <label class="form-check-custom success">
+                                        <input type="radio" v-model="powermap[powermap.active][power._id].required" v-on:change="map_power(powermap.active, power._id)" value="optional">
+                                    </label>
+                                </td>
+                                <td>
+                                    <label class="form-check-custom success">
+                                        <input type="radio" v-model="powermap[powermap.active][power._id].required" v-on:change="map_power(powermap.active, power._id)" value="required">
+                                    </label>
+                                </td>
+                                <td>
+                                    <input class="form-control" v-model="powermap[powermap.active][power._id].notes" v-on:change="map_power(powermap.active, power._id)"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!------------------------Skill Map Tab------------------------>
+    <div v-bind:class="(tab=='skill-map')?'tab-pane fade show active':'tab-pane fade'"  class="panel" v-if="tab==='skill-map'">
+        <div class="container">
+            <div class="row">
+                <div class="col-2">
+                    
+                    <ul class="nav flex-column border-right">
+                        <button class="btn btn-primary btn-sm" v-bind:disabled="!(skillmap.active !=null && skillmap[skillmap.active].changed===true)" v-on:click="map_skill_save()">Save</button>
+                        <li class="nav-item" v-for="spirit_type in spirit_types">
+                            <a v-if="skillmap.active!=spirit_type._id" href='#' class="nav-link" v-on:click="skillmap.active=spirit_type._id">{{spirit_type.type}}-{{spirit_type.element}}{{skillmap[spirit_type._id].changed==true?"*":""}}</a>
+                            <div v-if="skillmap.active==spirit_type._id" class="nav-link bg-secondary" disabled>{{spirit_type.type}}-{{spirit_type.element}}{{skillmap[spirit_type._id].changed==true?"*":""}}</div>
+                        </li>
+                        
+                    </ul>
+                    
+                </div>
+                <div class="col-9" v-if="skillmap.active!=null">
+                    <div class="row" v-for="skill in spirit_skills">
+                        <div class=" form-check form-check-inline">
+                            <input class="form-check-input" v-model="skillmap[skillmap.active][skill._id]" type="checkbox" v-on:change="map_skill(skillmap.active, skill._id)"></input>   
+                            <label class="form-check-label" >{{skill.name}}</label>                                             
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

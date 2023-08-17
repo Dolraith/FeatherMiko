@@ -1,0 +1,159 @@
+{
+    "Ranged Firing":{
+        "Total":0,
+        "Categories":{
+            "Environmental":{
+                "mode":"environment",
+                "modifierValues":[0,-1,-3,-6,-10],
+                "modifiers":
+                [
+                    {
+                        "name":"Visibility",
+                        "type":"select",
+                        "value":0,
+                        "selected":null,
+                        "options":[
+                            {"name":"Clear"},
+                            {"name":"Light Rain / Fog / Smoke"},
+                            {"name":"Moderate Rain / Fog / Smoke"},
+                            {"name":"Heavy Rain / Fog / Smoke"}
+                        ]
+                    },
+                    {
+                        "name":"Light / Glare",
+                        "type":"select",
+                        "value":0,
+                        "selected":null,
+                        "options":[
+                            {"name":"Full Light / No Glare"},
+                            {"name":"Partial Light / Weak Glare"},
+                            {"name":"Dim Light / Moderate Glare"},
+                            {"name":"Total Darkness / Blinding Glare"}                    
+                        ]
+                    },
+                    {
+                        "name":"Wind",
+                        "type":"select",
+                        "value":0,
+                        "selected":null,
+                        "options":[
+                            {"name":"None / Light Breeze"},
+                            {"name":"Light Winds"},
+                            {"name":"Moderate Winds"},
+                            {"name":"Strong Winds"}
+                        ]
+                    },
+                    {
+                        "name":"Range",
+                        "type":"select",
+                        "value":0,
+                        "selected":null,
+                        "options":[
+                            {"name":"Short"},
+                            {"name":"Medium"},
+                            {"name":"Long"},
+                            {"name":"Extreme"}
+                        ]
+                    }
+                ]
+            },
+            "Situation":{
+                "mode":"sum",
+                "modifiers":
+                [
+                    {
+                        "name":"Firing from cover w/imaging",
+                        "type":"checkbox",
+                        "value":-3,
+                        "selected":false
+                    },
+                    {
+                        "name":"Firing from moving vehicle",
+                        "type":"checkbox",
+                        "value":-2,
+                        "selected":false
+                    },
+                    {
+                        "name":"Firing while in melee combat",
+                        "type":"checkbox",
+                        "value":-3,
+                        "selected":false
+                    },
+                    {
+                        "name":"Firing while running",
+                        "type":"checkbox",
+                        "value":-2,
+                        "selected":false
+                    },
+                    {
+                        "name":"Firing off-hand weapon",
+                        "type":"checkbox",
+                        "value":-2,
+                        "selected":false
+                    },
+                    {
+                        "name":"Blind Fire",
+                        "type":"checkbox",
+                        "value":-6,
+                        "selected":false
+                    },
+                    {
+                        "name":"Called Shot",
+                        "type":"checkbox",
+                        "value":-4,
+                        "selected":false
+                    },
+                    {
+                        "name":"Take Aim",
+                        "type":"checkbox",
+                        "value":1,
+                        "selected":false
+                    },
+                    {
+                        "name":"Smartgun",
+                        "type":"select",
+                        "value":0,
+                        "selected":null,
+                        "options":[
+                            {"name":"None","value":0},
+                            {"name":"Gear","value":1},
+                            {"name":"Implant","value":2}
+                        ]
+                    }
+                ]
+            },
+            "Condition":{
+                "mode":"sum",
+                "modifiers":[
+                    {
+                        "name":"Wounds",
+                        "type":"numeric",
+                        "value":0
+                    },
+                    {
+                        "name":"Spell Debuffs",
+                        "type":"numeric",
+                        "value":0
+                    },
+                    {
+                        "name":"Spell Buffs",
+                        "type":"numeric",
+                        "value":0
+                    },
+                    {
+                        "name":"Other",
+                        "type":"numeric",
+                        "value":0
+                    }
+                ]
+            }
+        }
+        
+    },
+    "Melee Swing":{},
+    "Defence":{},
+    "Social":{},
+    "Magic":{},
+    "Matrix":{},
+    "Skill":{}
+}
