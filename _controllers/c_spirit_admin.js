@@ -73,16 +73,12 @@ class CIndex extends Controller {
     async saveType(){
         var sentType = this._request.body.type;
         var spiritType;
-        console.log(sentType);
         if(sentType._id != null){
             spiritType = await DataSpiritType.id(sentType._id);
         }else{
             spiritType = DataSpiritType.make();
         }
-       // console.log(spiritType);
         spiritType.inflate(sentType);
-       // console.log(spiritType);
-       // console.log(sentType);
         var resultId = await spiritType.save();
         this.setView({message:"Saved!", success:true, _id:resultId});
     }
@@ -138,7 +134,6 @@ class CIndex extends Controller {
         query += queryPieces.join(",");
         query += " ON DUPLICATE KEY UPDATE required = VALUES(required), notes = VALUES(notes)";
         var rows = await SQL.load(query, function(){});
-        console.log(rows);
         this.setView({success:true, message:"Saved power map for "+typeId+"."});
     }
 };

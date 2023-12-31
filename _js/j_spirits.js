@@ -198,7 +198,6 @@ export function initVue(initData, components){
                     this.optionalPowers.options.push(option);
                 }
                 this.optionalPowers.picked.splice(0, Infinity);
-                console.log(spirit.powers.picked.length);
                 for(var i in spirit.powers.picked){
                     this.optionalPowers.picked.push(spirit.powers.picked[i]._id);
                 }
@@ -250,7 +249,6 @@ export function initVue(initData, components){
                 }
                 var physMod = Math.floor(this.spiritList[spiritIndex].condition_phys_cur / 3);
                 var stunMod = Math.floor(this.spiritList[spiritIndex].condition_stun_cur / 3);
-                console.log(physMod + " | " + stunMod);
                 this.spiritList[spiritIndex].pool_modifier = -1 * (Math.max(stunMod, physMod));
             },
             forceTypeEleCompliance(index){
@@ -286,11 +284,7 @@ export function initVue(initData, components){
                 this.spiritList.splice(spiritIndex,1);
             },
             toggleSkillDetails(spiritIndex){
-                console.log(spiritIndex);
-                console.log(this.spiritList[spiritIndex]);
-                console.log(this.spiritList[spiritIndex].skillDetails);
                 this.spiritList[spiritIndex].skillDetails = !this.spiritList[spiritIndex].skillDetails;
-                console.log(this.spiritList[spiritIndex].skillDetails);
             },
             condenseSkills(spirit){
                 var result = [];

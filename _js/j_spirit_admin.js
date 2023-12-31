@@ -19,7 +19,6 @@ export function initVue(initData, components){
             for(i in initData){
                 data[i] = initData[i];
             }
-            console.log(data);
             return data;
         },
         template:"#vuetemplate",
@@ -75,7 +74,6 @@ export function initVue(initData, components){
                         body: JSON.stringify({type:this.spirit_types[index]})
                     });
                     var data = await fetch(request).then((response) => response.json());
-                    console.log(data);
                 }
                 this.spirit_types.splice(index,1);
             },
@@ -89,7 +87,6 @@ export function initVue(initData, components){
                         body: JSON.stringify({power:this.spirit_powers[index]})
                     });
                     var data = await fetch(request).then((response) => response.json());
-                    console.log(data);
                 }
                 this.spirit_powers.splice(index,1);
             },
@@ -103,12 +100,10 @@ export function initVue(initData, components){
                         body: JSON.stringify({skill:this.spirit_skills[index]})
                     });
                     var data = await fetch(request).then((response) => response.json());
-                    console.log(data);
                 }
                 this.spirit_skills.splice(index,1);
             },
             async saveType(index){
-                console.log(this.spirit_types[index]);
                 const request = new Request("spirit_admin/saveType",
                 {
                     method: "POST",
@@ -118,7 +113,6 @@ export function initVue(initData, components){
                 });
                 var data = await fetch(request).then((response) => response.json());
                 if(this.spirit_types[index]._id == null)this.spirit_types[index]._id = data._id;
-                console.log(data);
             },
             async savePower(index){
                 const request = new Request("spirit_admin/savePower",
@@ -130,7 +124,6 @@ export function initVue(initData, components){
                 });
                 var data = await fetch(request).then((response) => response.json());
                 this.spirit_powers[index]._id = data._id;
-                console.log(data);
             },
             async saveSkill(index){
                 const request = new Request("spirit_admin/saveSkill",
@@ -142,7 +135,6 @@ export function initVue(initData, components){
                 });
                 var data = await fetch(request).then((response) => response.json());
                 this.spirit_skills[index]._id = data._id;
-                console.log(data);
             },
             checkForNulls(){
                 var alertText = null;
@@ -168,11 +160,9 @@ export function initVue(initData, components){
             },
             map_skill(type_id, skill_id){
                 this.skillmap[type_id].changed = true;
-                console.log(type_id + " -> " + skill_id + " = " + this.skillmap[type_id][skill_id]);
             },
             map_power(type_id, power_id){
                 this.powermap[type_id].changed = true;
-                console.log(type_id + " --> " + power_id + " = " + this.powermap[type_id][power_id]);
             },
             async map_skill_save(){
                 this.skillmap[this.skillmap.active].changed = false;
@@ -184,7 +174,6 @@ export function initVue(initData, components){
                     body: JSON.stringify({type_id:this.skillmap.active,map:this.skillmap[this.skillmap.active]})
                 });
                 var data = await fetch(request).then((response) => response.json());
-                console.log(data);
             },
             async map_power_save(){
                 this.powermap[this.powermap.active].changed = false;
@@ -196,7 +185,6 @@ export function initVue(initData, components){
                     body: JSON.stringify({type_id:this.powermap.active,map:this.powermap[this.powermap.active]})
                 });
                 var data = await fetch(request).then((response) => response.json());
-                console.log(data);
             },
             activatePowermap(typeId){
                 for(var i in this.spirit_powers){
