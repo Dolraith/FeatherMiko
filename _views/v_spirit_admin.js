@@ -5,8 +5,8 @@ class v_index extends View{
         this.addDependency([{name:'vue',path:'/modules/Miko/_js/j_spirit_admin.js'}],'modules');
         this.addDependency('vue');
         this.setTemplate('modules/Miko/_templates/t_spirit_admin.html');
-        user = this.getDataProp("user");
-
+        
+        this.setVueData("user", this.getDataProp("user"));
         this.setVueData("skillmap",this.getDataProp("skillmap"));
         this.setVueData("powermap",this.getDataProp("powermap"));
         this.setVueData("spirit_types",this.getDataProp("spirit_types"));

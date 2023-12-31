@@ -1,6 +1,6 @@
 import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
-import Counter from '/modules/feather_core/default/_vueComponents/counter.js';
-import Tooltip from '/modules/feather_core/default/_vueComponents/tooltip.js';
+import Counter from '/modules/feather_core/_vueComponents/counter.js';
+import Tooltip from '/modules/feather_core/_vueComponents/tooltip.js';
 export function initVue(initData, components){
     
     var vue = createApp({

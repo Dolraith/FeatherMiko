@@ -15,12 +15,13 @@ class CIndex extends Controller {
         }
         this.setView('modules/Miko/_views/v_spirit_admin');
         user = await Data_User.id(id);
+        this.setViewData("user",user);
                 
         var spirit_types = await DataSpiritType.many_query(null,true);
         var spirit_powers = await DataSpiritPower.many_query(null,true);
         var spirit_skills = await DataSpiritSkill.many_query(null,true);
 
-        var spirit_skill_map = await SQL.load("SELECT * FROM spirit_map_types_skills")
+        var spirit_skill_map = await SQL.load("SELECT * FROM spirit_map_types_skills");
 
         var skillmap = {active:null};
         var powermap = {active:null};
@@ -47,7 +48,7 @@ class CIndex extends Controller {
             var power = cur["spirit_powers_id"];
             var required = cur['required'];
             var notes = cur['notes'];
-            if(notes == undefined)notes = '';
+            if(notes === undefined || notes === null)notes = '';
             powermap[type][power] = {required:required,notes:notes};
         }
 
