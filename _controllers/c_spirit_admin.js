@@ -13,7 +13,7 @@ class CIndex extends Controller {
             this.setRedirect("/err/err403");
             return;
         }
-        this.setView('modules/feather_core/default/spirits/_views/v_spirit_admin');
+        this.setView('modules/Miko/_views/v_spirit_admin');
         user = await Data_User.id(id);
                 
         var spirit_types = await DataSpiritType.many_query(null,true);
@@ -35,7 +35,7 @@ class CIndex extends Controller {
             var cur = spirit_skill_map[row];
             var type = cur["spirit_types_id"];
             var skill = cur["spirit_skills_id"];
-            var active = cur["active"]==1;
+            var active = cur["active"]===1;
             skillmap[type][skill] = active;
         }
 

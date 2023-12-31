@@ -47,7 +47,7 @@ class CIndex extends Controller {
         this.setViewData("spirit_powers",spirit_powers);
         this.setViewData("spirit_skills",spirit_skills);
 
-        this.setView('modules/feather_core/default/spirits/_views/v_spirits');
+        this.setView('modules/Miko/_views/v_spirits');
     }
 };
 module.exports=CIndex

@@ -2,9 +2,9 @@ const View = require(global.classPaths.view);
 class v_index extends View{
     init(){
         this.addDependency('bootstrap');
-        this.addDependency([{name:'vue',path:'/modules/feather_core/default/spirits/_js/j_spirit_admin.js'}],'modules');
+        this.addDependency([{name:'vue',path:'/modules/Miko/_js/j_spirit_admin.js'}],'modules');
         this.addDependency('vue');
-        this.setTemplate('modules/feather_core/default/spirits/_templates/t_spirit_admin.html');
+        this.setTemplate('modules/Miko/_templates/t_spirit_admin.html');
         user = this.getDataProp("user");
 
         this.setVueData("skillmap",this.getDataProp("skillmap"));
