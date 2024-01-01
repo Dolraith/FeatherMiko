@@ -1,17 +1,18 @@
 /* global global */
-var Controller = require(global.classPaths.controller);
-var DataSpiritType = require(global.classPaths.data.spirits.type);
-var DataSpiritSkill = require(global.classPaths.data.spirits.skill);
-var DataSpiritPower = require(global.classPaths.data.spirits.power);
-var SQL = require(global.classPaths.sql);
+Controller = require(global.classPaths.controller);
+Data_Factory = require(global.classPaths.data_factory);
+DataSpiritType = require(global.classPaths.data.miko.type);
+DataSpiritSkill = require(global.classPaths.data.miko.skill);
+DataSpiritPower = require(global.classPaths.data.miko.power);
+SQL = require(global.classPaths.sql);
 
 class CIndex extends Controller {
-    async index(){
-        var spirit_types = await DataSpiritType.many_query(null,true);
-        var spirit_powers = await DataSpiritPower.many_query(null,true);
-        var spirit_skills = await DataSpiritSkill.many_query(null,true);
+    async index(){        
+        var spirit_types = await (new Data_Factory(DataSpiritType).many_query(null,true));
+        var spirit_powers = await (new Data_Factory(DataSpiritPower).many_query(null,true));
+        var spirit_skills = await (new Data_Factory(DataSpiritSkill).many_query(null,true));
 
-        var spirit_skill_map = await SQL.load("SELECT * FROM spirit_map_types_skills WHERE active = 1")
+        var spirit_skill_map = await SQL.load("SELECT * FROM miko_map_types_skills WHERE active = 1");
         var skillmap = {};
         var powermap = {};
 
@@ -25,19 +26,19 @@ class CIndex extends Controller {
             var cur = spirit_skill_map[row];
             var type = cur["spirit_types_id"];
             var skill = cur["spirit_skills_id"];
-            var active = cur["active"]==1;
+            var active = cur["active"] === 1;
             skillmap[type][skill] = active;
         }
 
 
-        var spirit_power_map = await SQL.load("SELECT * FROM spirit_map_types_powers");
+        var spirit_power_map = await SQL.load("SELECT * FROM miko_map_types_powers");
         for(var row in spirit_power_map){
             var cur = spirit_power_map[row];
             var type = cur["spirit_types_id"];
             var power = cur["spirit_powers_id"];
             var required = cur['required'];
             var notes = cur['notes'];
-            if(notes == undefined)notes = '';
+            if(notes === undefined)notes = '';
             powermap[type][power] = {required:required,notes:notes};
         }
 
@@ -50,4 +51,4 @@ class CIndex extends Controller {
         this.setView('modules/Miko/_views/v_spirits');
     }
 };
-module.exports=CIndex
+module.exports=CIndex;

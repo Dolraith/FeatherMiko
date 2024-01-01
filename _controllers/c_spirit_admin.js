@@ -1,27 +1,27 @@
 /* global global */
-var Controller = require(global.classPaths.controller);
-var Data_User = require(global.classPaths.data.user)
-var DataSpiritType = require(global.classPaths.data.spirits.type);
-var DataSpiritSkill = require(global.classPaths.data.spirits.skill);
-var DataSpiritPower = require(global.classPaths.data.spirits.power);
-var SQL = require(global.classPaths.sql);
+Data_User = require(global.classPaths.data.core.user);
+Controller = require(global.classPaths.controller);
+Data_Factory = require(global.classPaths.data_factory);
+DataSpiritType = require(global.classPaths.data.miko.type);
+DataSpiritSkill = require(global.classPaths.data.miko.skill);
+DataSpiritPower = require(global.classPaths.data.miko.power);
+SQL = require(global.classPaths.sql);
 
 class CIndex extends Controller {
     async index(){
-        var id = this.checkLogin(this._request);
-        if(id === false){
+        //do this with a proper permission required thing.
+        if(!await this.checkLogin()){
             this.setRedirect("/err/err403");
             return;
         }
         this.setView('modules/Miko/_views/v_spirit_admin');
-        user = await Data_User.id(id);
-        this.setViewData("user",user);
+        this.setViewData("user",await this.getUserId());
                 
-        var spirit_types = await DataSpiritType.many_query(null,true);
-        var spirit_powers = await DataSpiritPower.many_query(null,true);
-        var spirit_skills = await DataSpiritSkill.many_query(null,true);
+        var spirit_types = await (new Data_Factory(DataSpiritType).many_query(null,true));
+        var spirit_powers = await (new Data_Factory(DataSpiritPower).many_query(null,true));
+        var spirit_skills = await (new Data_Factory(DataSpiritSkill).many_query(null,true));
 
-        var spirit_skill_map = await SQL.load("SELECT * FROM spirit_map_types_skills");
+        var spirit_skill_map = await SQL.load("SELECT * FROM miko_map_types_skills");
 
         var skillmap = {active:null};
         var powermap = {active:null};
@@ -41,7 +41,7 @@ class CIndex extends Controller {
         }
 
 
-        var spirit_power_map = await SQL.load("SELECT * FROM spirit_map_types_powers");
+        var spirit_power_map = await SQL.load("SELECT * FROM miko_map_types_powers");
         for(var row in spirit_power_map){
             var cur = spirit_power_map[row];
             var type = cur["spirit_types_id"];
@@ -74,7 +74,7 @@ class CIndex extends Controller {
     async saveType(){
         var sentType = this._request.body.type;
         var spiritType;
-        if(sentType._id != null){
+        if(sentType._id !== null){
             spiritType = await DataSpiritType.id(sentType._id);
         }else{
             spiritType = DataSpiritType.make();
@@ -86,7 +86,7 @@ class CIndex extends Controller {
     async savePower(){
         var sentPower = this._request.body.power;
         var spiritPower;
-        if(sentPower._id != null){
+        if(sentPower._id !== null){
             spiritPower = await DataSpiritPower.id(sentPower._id);
         }else{
             spiritPower = DataSpiritPower.make();
@@ -98,7 +98,7 @@ class CIndex extends Controller {
     async saveSkill(){
         var sentSkill = this._request.body.skill;
         var spiritSkill;
-        if(sentSkill._id != null){
+        if(sentSkill._id !== null){
             spiritSkill = await DataSpiritSkill.id(sentSkill._id);
         }else{
             spiritSkill = DataSpiritSkill.make();
@@ -114,7 +114,7 @@ class CIndex extends Controller {
         var query = "INSERT INTO spirit_map_types_skills (spirit_types_id,spirit_skills_id,active) VALUES ";
         var queryPieces = [];
         for(var i in map){
-            if(i == "changed")continue;
+            if(i === "changed")continue;
             queryPieces.push("(" +typeId + "," + i + ","+(map[i]|0)+")");
         }
         query += queryPieces.join(",");
@@ -129,7 +129,7 @@ class CIndex extends Controller {
         var query = "INSERT INTO spirit_map_types_powers (spirit_types_id,spirit_powers_id,required,notes) VALUES ";
         var queryPieces = [];
         for(var i in map){
-            if(i == "changed")continue;
+            if(i === "changed")continue;
             queryPieces.push("(" + typeId + ", " + i + ", '" + map[i].required + "', '" + map[i].notes+ "')");
         }
         query += queryPieces.join(",");
