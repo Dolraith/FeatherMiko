@@ -5,7 +5,7 @@
         <button class="btn btn-primary" v-on:click="addSpirit">Add Spirit</button> &nbsp
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#traditionLookup">Tradition Lookup</button> &nbsp
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#limitations">Limitations</button> &nbsp
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#poolModCalc">Pool Mod Calc</button> &nbsp 
+        <button v-if="false" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#poolModCalc">Pool Mod Calc</button> &nbsp 
     </h3>
 </div>
 <hr>
@@ -63,13 +63,26 @@
                     <div class="row">
                         <div class='col-3'>Phys Condition:</div>
                         <div class="col-9">
-                            <input disabled v-bind:checked="i<=spirit.condition_phys_cur" v-for="i in spirit.condition_phys_max" type="checkbox">
+                            <template v-for="i in spirit.condition_phys_max">
+                                <div class="guage-check guage-check-inline">
+                                    <input type="checkbox" disabled  v-bind:checked="i <= spirit.condition_phys_cur" class="guage-check-input guage-check-green guage-checked-red" >
+
+
+                                </div>
+                            </template>
+
                         </div>
                     </div>
                     <div class="row">
                         <div class='col-3'>Stun Condition:</div>
                         <div class="col-9">
-                            <input disabled v-bind:checked="i<=spirit.condition_stun_cur" v-for="i in spirit.condition_stun_max" type="checkbox">
+                            <template v-for="i in spirit.condition_stun_max">
+                                <div class="guage-check guage-check-inline">
+                                    <input type="checkbox" disabled  v-bind:checked="i <= spirit.condition_stun_cur" class="guage-check-input guage-check-green guage-checked-yellow" >
+                                </div>
+                            </template>
+
+
                         </div>
                     </div>
                     <div class="row">
@@ -123,10 +136,10 @@
             <!---Powers-->
             <div class="row">
                 <div><b>Powers</b></div>
-                <div>Required: <span style="cursor:pointer" class="mx-1 badge badge-secondary" v-for="power in spirit.powers.required" v-on:click='setPowerTooltip(power)' data-bs-toggle='modal' data-bs-target='#powerExplanation'>{{getPowerName(power)}} <i class="bi bi-question-circle"></i></span></div>       
-                <div>Optional: <div v-if='spirit.powers.picked.length > spirit.powers.numOptional' class="mx-1 badge badge-danger" style="cursor:pointer">!Too Many Powers!</div>  <div v-if='spirit.powers.picked.length < spirit.powers.numOptional' class="margin-left: 15px; badge badge-warning">!Pick More Powers!</div> 
-                    <button style="margin-right: 5px;" v-on:click="pickPowers(spirit, spiritIndex)" class="badge badge-primary" data-bs-toggle="modal" data-bs-target="#powerPickModal"><i class="bbi bi-wrench"></i></button>
-                    <span style="margin-right: 5px;" class="badge badge-secondary" v-for="power in spirit.powers.picked" v-on:click='setPowerTooltip(power)' data-bs-toggle='modal' data-bs-target='#powerExplanation'>{{getPowerName(power)}} <i class="bi bi-question-circle"></i></span>
+                <div>Required: <span style="cursor:pointer" class="mx-1 badge text-bg-secondary" v-for="power in spirit.powers.required" v-on:click='setPowerTooltip(power)' data-bs-toggle='modal' data-bs-target='#powerExplanation'>{{getPowerName(power)}} <i class="bi bi-question-circle"></i></span></div>       
+                <div>Optional: <div v-if='spirit.powers.picked.length > spirit.powers.numOptional' class="mx-1 badge text-bg-danger" style="cursor:pointer">!Too Many Powers!</div>  <div v-if='spirit.powers.picked.length < spirit.powers.numOptional' class="margin-left: 15px; badge text-bg-warning">!Pick More Powers!</div> 
+                    <button style="margin-right: 5px;" v-on:click="pickPowers(spirit, spiritIndex)" class="badge text-bg-primary" data-bs-toggle="modal" data-bs-target="#powerPickModal"><i class="bbi bi-wrench"></i></button>
+                    <span style="margin-right: 5px;" class="badge text-bg-secondary" v-for="power in spirit.powers.picked" v-on:click='setPowerTooltip(power)' data-bs-toggle='modal' data-bs-target='#powerExplanation'>{{getPowerName(power)}} <i class="bi bi-question-circle"></i></span>
                 </div>
             </div>
         </div>
@@ -138,9 +151,8 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Pick Powers  <div v-bind:class="(optionalPowers.picked.length>optionalPowers.numOptional)?'badge badge-danger':'badge badge-success'">{{optionalPowers.picked.length}}/{{optionalPowers.numOptional}}</div></h5>
-          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+          <h5 class="modal-title">Pick Powers  <div v-bind:class="(optionalPowers.picked.length>optionalPowers.numOptional)?'badge text-bg-danger':'badge text-bg-success'">{{optionalPowers.picked.length}}/{{optionalPowers.numOptional}}</div></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
           </button>
         </div>
         <div class="modal-body">
@@ -179,8 +191,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Tradition Lookup</h5>
-          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
           </button>
         </div>
         <div class="modal-body">
@@ -216,8 +227,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">{{powerTooltip.power.name}}</h5>
-          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
           </button>
         </div>
         <div class="modal-body">
@@ -255,8 +265,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Current Limitations</h5>
-          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
           </button>
         </div>
         <div class="modal-body">
@@ -285,8 +294,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Dice Pool Modifier Calculator</h5>
-          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
           </button>
         </div>
         <div class="modal-body">
